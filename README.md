@@ -1,7 +1,7 @@
 # **trippygeese**
 
 ## npttf2utf-flask
-Flask Web App powered by [ttf2utf](https://github.com/trippygeese/ttf2utf) to Unify multiple Nepali ASCII font faces like Preeti, Sagarmatha, etc to Devanagari Unicode made on Python (Flask) with font autodetection and component selection. (paragraphs, table, shape/textbox)
+Flask Web App powered by [npttf2utf](https://github.com/trippygeese/npttf2utf) to Unify multiple Nepali ASCII font faces like Preeti, Sagarmatha, etc to Devanagari Unicode made on Python (Flask) with font autodetection and component selection. (paragraphs, table, shape/textbox)
 
 ### Features
 
@@ -19,8 +19,8 @@ This tool is made in python3 so, download and install python and pip from here (
 Install the dependencies and start the server.
 
 ```
-$ git clone https://github.com/trippygeese/ttf2utf-flask.git
-$ cd ttf2utf-flask
+$ git clone https://github.com/trippygeese/npttf2utf-flask.git
+$ cd npttf2utf-flask
 $ pip install -r requirements.txt
 or
 $ pip3 install -r requirements.txt
@@ -33,18 +33,18 @@ If everything went correctly, the application is started on the localhost on por
 ### Configuring
 - Change the FLUSH_KEY on "config.json" and set up a scheduled task to send get requests to "http://yourdomain.name/flusholdfiles/<FLUSH_KEY>" to delete old files.
 - SET PORT on "config.json" to listen for connections on that port. (Default is 5000)
-- Change the RULES_JSON on "config.json" to use custom mapping defination (By default mapping defination file of ttf2utf library is used).
+- Change the RULES_JSON on "config.json" to use custom mapping defination (By default mapping defination file of npttf2utf library is used).
 - Change UPLOADS_LIFESPAN on "config.json" for as long as you want a file to be available for processing and downloading.
 - Change UPLOADED_FILES_STORAGE and PROCESSED_FILES_STORAGE on "config.json" to use different location to save uploaded and processed files.
 - Change DEFAULT_UNICODE_FONT "config.json" to set the default font for the converted document (Only for Docx file).
 
 <br>
 
-Supported components, supported ASCII font faces and Supported Output fonts are dependent on ttf2utf library
+Supported components, supported ASCII font faces and Supported Output fonts are dependent on npttf2utf library
 
 ### **Adding support for new file type or Adding mapping for a new font**
 
-Refer to the README.md of [ttf2utf](https://github.com/trippygeese/ttf2utf) library to add support for new font and file type. For setting up this application to accept new files types add file extension as key and instance of ttf2utf document converter and value in "supportedtypes" variable inside "app.py"
+Refer to the README.md of [npttf2utf](https://github.com/trippygeese/npttf2utf) library to add support for new font and file type. For setting up this application to accept new files types add file extension as key and instance of npttf2utf document converter and value in "supportedtypes" variable inside "app.py"
 
 Information on endpoints are on "ENDPOINT.md"
 
