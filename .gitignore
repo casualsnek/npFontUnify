@@ -6,6 +6,16 @@ __pycache__/
 # C extensions
 *.so
 
+# Extra custom gitignores
+**/__pycache__/
+*.pyc
+cookie.*
+test/
+.idea/
+static/screenshot/*.png
+*.sh
+*.env
+
 # Distribution / packaging
 .Python
 build/

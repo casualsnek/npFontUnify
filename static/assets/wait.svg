@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:docname="wait.svg" inkscape:version="1.0 (4035a4fb49, 2020-05-01)" id="svg8" version="1.1" viewBox="0 0 104.19934 103.29164" height="103.29164mm" width="104.19934mm">
+  <defs id="defs2">
+    <marker inkscape:isstock="true" style="overflow:visible" id="Arrow1Lstart" refX="0" refY="0" orient="auto" inkscape:stockid="Arrow1Lstart">
+      <path transform="matrix(0.8,0,0,0.8,10,0)" style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#00ff00;stroke-width:1pt;stroke-opacity:1" d="M 0,0 5,-5 -12.5,0 5,5 Z" id="path835"/>
+    </marker>
+  </defs>
+  <sodipodi:namedview inkscape:window-maximized="1" inkscape:window-y="32" inkscape:window-x="0" inkscape:window-height="1018" inkscape:window-width="1920" fit-margin-bottom="2" fit-margin-right="2" fit-margin-top="2" fit-margin-left="2" showgrid="false" inkscape:document-rotation="0" inkscape:current-layer="layer1" inkscape:document-units="mm" inkscape:cy="245.26113" inkscape:cx="234.89369" inkscape:zoom="1.1125531" inkscape:pageshadow="2" inkscape:pageopacity="0.0" borderopacity="1.0" bordercolor="#666666" pagecolor="#ffffff" id="base"/>
+  <metadata id="metadata5">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g transform="translate(-42.80518,-72.835243)" id="layer1" inkscape:groupmode="layer" inkscape:label="Layer 1">
+    <path d="M 138.49338,124.46043 A 43.872131,43.872131 0 0 1 94.621246,168.33256 43.872131,43.872131 0 0 1 50.749115,124.46043 43.872131,43.872131 0 0 1 94.621246,80.588295 43.872131,43.872131 0 0 1 138.49338,124.46043" style="fill:none;stroke:#008080;stroke-width:11.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:46.4, 23.2;stroke-dashoffset:0" id="path833"/>
+    <path id="path1177" d="m 137.15592,112.73955 7.55517,-15.522534 -22.25608,11.503274 z" style="fill:#008080;stroke:#008080;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"/>
+    <path style="fill:#008080;stroke:#008080;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" d="m 106.38621,167.55197 16.40052,5.39005 -14.40305,-20.49903 z" id="path1181"/>
+    <path id="path1183" d="m 49.685567,136.38879 -4.645689,16.6267 19.829319,-15.31196 z" style="fill:#008080;stroke:#008080;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"/>
+    <path style="fill:#008080;stroke:#008080;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" d="M 84.364686,80.618055 67.893035,75.449467 82.57097,95.752577 Z" id="path1185"/>
+    <g style="font-style:normal;font-weight:normal;font-size:16.457px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.411426" id="text1189" aria-label="WAIT">
+      <path id="path1218" style="stroke-width:0.411426" d="m 74.112906,118.48246 h 1.639272 l 2.523192,10.14098 2.515157,-10.14098 h 1.824092 l 2.523192,10.14098 2.515157,-10.14098 h 1.647307 l -3.013367,11.99722 h -2.041053 l -2.531229,-10.4142 -2.555335,10.4142 h -2.041053 z"/>
+      <path id="path1220" style="stroke-width:0.411426" d="m 94.563623,120.08155 -2.201767,5.97048 h 4.411569 z m -0.916064,-1.59909 h 1.840163 L 100.06,130.47968 h -1.687482 l -1.092847,-3.07766 h -5.40799 l -1.092847,3.07766 h -1.711593 z"/>
+      <path id="path1222" style="stroke-width:0.411426" d="m 101.81177,118.48246 h 1.6232 v 11.99722 h -1.6232 z"/>
+      <path id="path1224" style="stroke-width:0.411426" d="m 105.00192,118.48246 h 10.14902 v 1.36606 h -4.25889 v 10.63116 h -1.63123 v -10.63116 h -4.2589 z"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+body, div, span {
+    color:white;
+}
+body {
+    background-color: #1b1919;
+}
+.card-header {
+    background-color: #008080;
+}
+.card-body {
+    background-color: #323232;
+}
+.modal-content {
+    background-color: #333333;
+}
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
