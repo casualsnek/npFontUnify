@@ -91,7 +91,7 @@ def process():
     origin_font = request.form['origin']
     target_font = request.form['target']
     file_key = request.form['file_id']
-    file_in_db = files.query.filter(files.file_key == file_key, files.processed is False,
+    file_in_db = files.query.filter(files.file_key == file_key, files.processed == False,
                                     files.uploaded_on >= int(time.time()) - UPLOADS_LIFESPAN).first()
     if file_in_db:
         if file_in_db.ftype in supported_file_types:
@@ -161,5 +161,15 @@ if __name__ == '__main__':
     create_dirs()
     with app.app_context():
         db.create_all()
-
+    print("""
+    --------------- npFontUnify ---------------
+      Using Rule file          : {}
+      Default unicode font     : {}
+      File lifespan set to     : {} seconds
+      Saving uploaded file in  : {}
+      Saving processed file in : {}
+      Supported file types     : {}
+    -------------------------------------------
+    """.format(RULES_JSON, DEFAULT_UNICODE_FONT, str(UPLOADS_LIFESPAN), UPLOADED_FILES_STORAGE, PROCESSED_FILES_STORAGE,
+               str(supported_file_types.keys())))
     app.run(debug=True, host=os.environ.get('HOST', '0.0.0.0'), port=int(os.environ.get('PORT', '5000')))
