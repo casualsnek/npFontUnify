@@ -36,7 +36,7 @@ Configuration of application is done using environment variable. The environment
 | RULES_JSON      | Rule file used for mapping fonts to unicode | Default 'map.json' file from directory of imported 'npttf2utf' library|
 | FLUSH_KEY      | Phrase to be passed to ``` /flush_files/<UPLOADS_LIFESPAN> ``` which flushes old files in server         |   ___Random___ |
 | SECRET KEY      | Secret key for flask |   ___Random___ |
-| UPLOADS_LIFESPAN | Max time for which an uploaded or processed file is marked as processable or downloadable. (In seconds) Files which exceeds this period of time are deleted when ```/flush_files/<UPLOADS_LIFESPAN>``` is requested with correct UPLOADS_LIFESPAN       | 3600 |
+| UPLOADS_LIFESPAN | Max time for which an uploaded or processed file is marked as processable or downloadable. (In minutes) Files which exceeds this period of time are deleted when ```/flush_files/<UPLOADS_LIFESPAN>``` is requested with correct UPLOADS_LIFESPAN       | 3600 |
 | DEFAULT_UNICODE_FONT   | Default font face set for text converted to unicode (Only for docx files)  | Kalimati  |
 | UPLOADED_FILES_STORAGE | Location where user uploaded files are stored | ```<app.py's location>/user_files/uploads/``` |
 | PROCESSED_FILES_STORAGE | Location where user processed files are stored | ```<app.py's location>/user_files/processed/``` |

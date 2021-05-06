@@ -19,7 +19,7 @@ db.init_app(app)
 
 RULES_JSON = os.environ.get('RULES_JSON', os.path.join(os.path.dirname(npttf2utf.__file__), 'map.json'))
 FLUSH_KEY = os.environ.get('FLUSH_KEY', ''.join(random.choice(string.ascii_letters) for x in range(32)))
-UPLOADS_LIFESPAN = int(os.environ.get('FILE_LIFESPAN', '3600'))
+UPLOADS_LIFESPAN = int(os.environ.get('FILE_LIFESPAN', '60')) * 60
 DEFAULT_UNICODE_FONT = os.environ.get('DEFAULT_UNICODE_FONT', 'Kalimati')
 UPLOADED_FILES_STORAGE = os.environ.get('UPLOAD_LOCATION', os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                                                         'user_files',
@@ -56,7 +56,7 @@ def serve_static(file_name):
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('home.html')
+    return render_template('home.html', file_life=str(UPLOADS_LIFESPAN/60))
 
 
 @app.route('/upload', methods=['POST'])
@@ -172,4 +172,4 @@ if __name__ == '__main__':
     -------------------------------------------
     """.format(RULES_JSON, DEFAULT_UNICODE_FONT, str(UPLOADS_LIFESPAN), UPLOADED_FILES_STORAGE, PROCESSED_FILES_STORAGE,
                str(supported_file_types.keys())))
-    app.run(debug=True, host=os.environ.get('HOST', '0.0.0.0'), port=int(os.environ.get('PORT', '5000')))
+    app.run(debug=bool(int(os.environ.get("DEBUG", "0"))), host=os.environ.get('HOST', '0.0.0.0'), port=int(os.environ.get('PORT', '5000')))

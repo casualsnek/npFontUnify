@@ -32,7 +32,9 @@
                             </span>
                         </label>
                         <p>
-                            <small>** This is a server sided tool! Do not upload your files if they are confidential! Use desktop app instead**</small>
+                            <small>** This is a server sided tool! Do not upload your files if they are confidential! Use
+                                <a href="https://github.com/trippygeese/npttf2utf">npttf2utf</a> instead**
+                            </small>
                         </p>
                     </div>
                     <br />
@@ -45,7 +47,7 @@
                         <a href="#" id="filedownloadlink" class="btn btn-success"> Click here to download </a>
                         <br />
                         <p>
-                            <small>** Download link is valid for 60 minute since the document upload **</small>
+                            <small>** Download link is valid for {{ file_life }} minutes after document upload **</small>
                         </p>
                         <a href="/" class="btn btn-primary btn-small"> Process another document </a>
                     </div>
@@ -54,7 +56,7 @@
                 <div align="center" class="wait-notice" style="display: none;">
                     <div class="col-lg-6 col-sm-6 col-12">
                         <h3>Processing your request</h3>
-                        <img src="static/assets/wait.svg" class="img img-fluid" height="128px" width="128px" />
+                        <img class="load-rotate" src="static/assets/wait.svg" class="img img-fluid" height="128px" width="128px" />
                         <br />
                         <br />
                         <a href="" class="btn btn-primary btn-small"> Cancel and Reload </a>
@@ -63,7 +65,7 @@
                 </div>
 
                 <div class="row font-selection-card" style="display: none;">
-                    <div class="col-md-7 col-sm-12 col-7">
+                    <div class="col-12 col-lg-7 col-xl-7">
                         <div class="card h-100">
                             <div class="card-header">
                                 Select Font mapping
@@ -94,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 col-sm-12 col-5">
+                    <div class="col-12 col-lg-5 col-xl-5">
                         <div class="card h-100">
                             <div class="card-header">
                                 Select components to process

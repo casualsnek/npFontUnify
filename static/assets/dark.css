@@ -17,3 +17,18 @@ table, th, td {
     border: 2px solid black;
     border-collapse: collapse;
 }
+.col-12 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.load-rotate {
+  animation: rotation 3s infinite linear;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
