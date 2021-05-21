@@ -1,13 +1,14 @@
-body, div, span {
+body, div, span, textarea {
     color:white;
 }
 body {
     background-color: #1b1919;
 }
+
 .card-header {
     background-color: #008080;
 }
-.card-body {
+.card-body, textarea {
     background-color: #323232;
 }
 .modal-content {

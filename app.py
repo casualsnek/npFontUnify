@@ -35,6 +35,7 @@ docx = npttf2utf.DocxHandler(RULES_JSON, default_unicode_font_name=DEFAULT_UNICO
 txt = npttf2utf.TxtHandler(RULES_JSON)
 supported_file_types['docx'] = docx
 supported_file_types['txt'] = txt
+font_mapper = npttf2utf.FontMapper(RULES_JSON)
 
 
 # Create storage directories if missing
@@ -56,7 +57,7 @@ def serve_static(file_name):
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('home.html', file_life=str(UPLOADS_LIFESPAN/60))
+    return render_template('home.html', file_life=str(UPLOADS_LIFESPAN / 60))
 
 
 @app.route('/upload', methods=['POST'])
@@ -84,6 +85,39 @@ def upload():
             return {'message': 'Internal error ' + str(e)}, 500
     else:
         return {'message': 'No support for provided file type'}, 403
+
+
+@app.route('/processtext', methods=['POST', 'GET'])
+def map_text():
+    origin_font = None
+    target_font = None
+    text = None
+    if request.method == "POST":
+        origin_font = request.form.get("origin", "Preeti")
+        target_font = request.form.get("target", "Unicode")
+        text = request.form['text']
+    else:
+        origin_font = request.args.get("origin", "Preeti")
+        target_font = request.args.get("target", "Unicode")
+        text = request.args['text']
+    if target_font.lower() == "preeti":
+        try:
+            text = font_mapper.map_to_preeti(text, from_font=origin_font)
+            return {"text": text}, 200
+        except npttf2utf.NoMapForOriginException:
+            return {"message": "Cannot map to preeti from origin font '" + origin_font + "'"}, 403
+        except:
+            return {"message": "Internal error"}, 500
+    elif target_font.lower() == "unicode":
+        try:
+            text = font_mapper.map_to_unicode(text, from_font=origin_font)
+            return {"text": text}, 200
+        except npttf2utf.NoMapForOriginException:
+            return {"message": "Cannot map to preeti from origin font '" + origin_font + "'"}, 403
+        except:
+            return {"message": "Internal error"}, 500
+    else:
+        return {"message": "Cannot map to selected target font '" + target_font + "'"}, 403
 
 
 @app.route('/process', methods=['POST'])
@@ -172,4 +206,5 @@ if __name__ == '__main__':
     -------------------------------------------
     """.format(RULES_JSON, DEFAULT_UNICODE_FONT, str(UPLOADS_LIFESPAN), UPLOADED_FILES_STORAGE, PROCESSED_FILES_STORAGE,
                str(supported_file_types.keys())))
-    app.run(debug=bool(int(os.environ.get("DEBUG", "0"))), host=os.environ.get('HOST', '0.0.0.0'), port=int(os.environ.get('PORT', '5000')))
+    app.run(debug=bool(int(os.environ.get("DEBUG", "0"))), host=os.environ.get('HOST', '0.0.0.0'),
+            port=int(os.environ.get('PORT', '5000')))

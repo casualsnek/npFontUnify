@@ -18,101 +18,137 @@
         <br />
         <div class="card">
             <div class="card-header" align="center">
-                Unify Nepali font faces
+                Unify Nepali font face
+                <div class="row">
+                    <div class="col" align="center">
+                        <button class="btn btn-primary" id="switchtofile"> File conversion </button>
+                    </div>
+                    <div class="col" align="center">
+                        <button class="btn btn-primary" id="switchtolive"> Live type and map</button>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
-                <div align="center" class="document-upload-card">
-                    <div class="col-lg-6 col-sm-6 col-12">
-                        <h4>Select file to convert</h4>
-                        <label class="input-group-btn">
-                            <span>
-                                <img src="static/assets/upload-bg.svg" /> <input class="document-upload" id="document-upload" type="file" style="display: none;" accept=".txt, .docx" />
-                                <br />
-                                Click to browse file
-                            </span>
-                        </label>
-                        <p>
-                            <small>** This is a server sided tool! Do not upload your files if they are confidential! Use
-                                <a href="https://github.com/trippygeese/npttf2utf">npttf2utf</a> instead**
-                            </small>
-                        </p>
+                <div class="card-document-mode">
+                    <div align="center" class="document-upload-card">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <h4>Select file to convert</h4>
+                            <label class="input-group-btn">
+                                <span>
+                                    <img src="static/assets/upload-bg.svg" /> <input class="document-upload" id="document-upload" type="file" style="display: none;" accept=".txt, .docx" />
+                                    <br />
+                                    Click to browse file
+                                </span>
+                            </label>
+                            <p>
+                                <small>** This is a server sided tool! Do not upload your files if they are confidential! Use
+                                    <a href="https://github.com/trippygeese/npttf2utf">npttf2utf</a> instead**
+                                </small>
+                            </p>
+                        </div>
+                        <br />
                     </div>
-                    <br />
-                </div>
-                <div align="center" class="document-download-card" style="display: none;">
-                    <div class="col-lg-6 col-sm-6 col-12">
-                        <img src="static/assets/btn-download.svg" class="img img-fluid" height="128px" width="128px" />
+                    <div align="center" class="document-download-card" style="display: none;">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <img src="static/assets/btn-download.svg" class="img img-fluid" height="128px" width="128px" />
+                            <br />
+                            <br />
+                            <a href="#" id="filedownloadlink" class="btn btn-success"> Click here to download </a>
+                            <br />
+                            <p>
+                                <small>** Download link is valid for {{ file_life }} minutes after document upload **</small>
+                            </p>
+                            <a href="/" class="btn btn-primary btn-small"> Process another document </a>
+                        </div>
                         <br />
-                        <br />
-                        <a href="#" id="filedownloadlink" class="btn btn-success"> Click here to download </a>
-                        <br />
-                        <p>
-                            <small>** Download link is valid for {{ file_life }} minutes after document upload **</small>
-                        </p>
-                        <a href="/" class="btn btn-primary btn-small"> Process another document </a>
                     </div>
-                    <br />
-                </div>
-                <div align="center" class="wait-notice" style="display: none;">
-                    <div class="col-lg-6 col-sm-6 col-12">
-                        <h3>Processing your request</h3>
-                        <img class="load-rotate" src="static/assets/wait.svg" class="img img-fluid" height="128px" width="128px" />
+                    <div align="center" class="wait-notice" style="display: none;">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <h3>Processing your request</h3>
+                            <img class="load-rotate" src="static/assets/wait.svg" class="img img-fluid" height="128px" width="128px" />
+                            <br />
+                            <br />
+                            <a href="" class="btn btn-primary btn-small"> Cancel and Reload </a>
+                        </div>
                         <br />
-                        <br />
-                        <a href="" class="btn btn-primary btn-small"> Cancel and Reload </a>
                     </div>
-                    <br />
-                </div>
 
-                <div class="row font-selection-card" style="display: none;">
-                    <div class="col-12 col-lg-7 col-xl-7">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                Select Font mapping
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12 col-lg-7 col-xl-7">
-                                        <div class="card h-100">
-                                            <div class="card-header">
-                                                Map From
-                                            </div>
-                                            <div class="card-body origin-selection">
+                    <div class="row font-selection-card" style="display: none;">
+                        <div class="col-12 col-lg-7 col-xl-7">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    Select Font mapping
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-7 col-xl-7">
+                                            <div class="card h-100">
+                                                <div class="card-header">
+                                                    Map From
+                                                </div>
+                                                <div class="card-body origin-selection">
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-lg-5 col-xl-5">
-                                        <div class="card h-100">
-                                            <div class="card-header">
-                                                Map To
-                                            </div>
-                                            <div class="card-body target-selection">
+                                        <div class="col-12 col-lg-5 col-xl-5">
+                                            <div class="card h-100">
+                                                <div class="card-header">
+                                                    Map To
+                                                </div>
+                                                <div class="card-body target-selection">
 
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-5 col-xl-5">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                Select components to process
-                            </div>
-                            <div class="card-body component-selection">
-                                <input type="checkbox" id="component_1" name="process_components" class="process_components" value="body_paragraph" checked>
-                                <label for="component_1"> Body Paragraphs (Normal Paragraphs in document) </label><br>
-                                <input type="checkbox" id="component_2" name="process_components" class="process_components" value="table" checked>
-                                <label for="component_2"> Tables </label><br>
-                                <input type="checkbox" id="component_3" name="process_components" class="process_components" value="shape" checked>
-                                <label for="component_3"> Shapes and Text boxes </label><br>
+                        <div class="col-12 col-lg-5 col-xl-5">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    Select components to process
+                                </div>
+                                <div class="card-body component-selection">
+                                    <input type="checkbox" id="component_1" name="process_components" class="process_components" value="body_paragraph" checked>
+                                    <label for="component_1"> Body Paragraphs (Normal Paragraphs in document) </label><br>
+                                    <input type="checkbox" id="component_2" name="process_components" class="process_components" value="table" checked>
+                                    <label for="component_2"> Tables </label><br>
+                                    <input type="checkbox" id="component_3" name="process_components" class="process_components" value="shape" checked>
+                                    <label for="component_3"> Shapes and Text boxes </label><br>
+                                </div>
                             </div>
                         </div>
+                        &nbsp;
+                        <button id="processdocument" class="btn btn-primary" style="width: 100%; padding-top: 5px">Convert document</button>
                     </div>
-                    &nbsp;
-                    <button id="processdocument" class="btn btn-primary" style="width: 100%; padding-top: 5px">Convert document</button>
+                </div>
+                <div class="card-type-mode" style="display: none;">
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <label for="live-origin">Origin font:</label>
+                            <select name="live-origin" id="live-origin">
+                                <option value="Preeti" selected="selected">Preeti</option>
+                                <option value="FONTASY_HIMALI_TT">FONTASY_HIMALI_TT</option>
+                                <option value="Kantipur">Kantipur</option>
+                                <option value="PCS NEPALI">PCS NEPALI</option>
+                                <option value="Sagarmatha">Sagarmatha</option>
+                                <option value="Unicode">Unicode</option>
+                            </select>
+                        </div>
+                        <div class="col" style="text-align: center;">
+                            <label for="live-target">Map to:</label>
+                            <select name="live-target" id="live-target">
+                                <option value="Unicode" selected="selected">Unicode</option>
+                                <option value="Preeti">Preeti</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center">
+                        <textarea id="live-text" rows="10" style="width: 90%; max-width: 90%;" placeholder="Type in select origin font here, it will be mapped automatically to target font on pressing space"></textarea>
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ Flask Web App powered by [npttf2utf](https://github.com/trippygeese/npttf2utf) t
   - You can select the component whose text file will be processed in a Docx file. (shape box/shape, table, paragraphs)
   - Support for txt and Docx file
   - Web-based so no need to download anything
+  - Live origin to target font mapping (similar to what most sites feature)
 
 ### Installation
 
@@ -58,10 +59,11 @@ Methods: POST
 EXPECTED RESPONSES:
 
 | STATUS CODE | INFORMATION |
-|--|--|
+|--- |--|
 | 200  | The request was successful. Returns all supported fonts(detected_supported_fonts), fonts detected (supported_origins) and the file id (file_id) for further requests in JSON format <p> Sample response: {"detected_supported_fonts": ["Preeti", "Sagarmatha"], "file_id": "sendThisFileIdOnFurtherRequests", "supported_origins": ["Preeti", "Kantipur", "Sagarmatha"]} |
 | 403 | The document format you tried to upload is unsupported. (Only .docx and .txt files are supported).<p>Sample response: {"message": "No support for provided file type"} |
 | 500 | Error while processing requests. This might occur if something went wrong on the server-side or the document you uploaded is corrupted. The message filed on response gives information about the error.<p>Sample response: {"message": "Text describing the error"} |
+
 
 NOTE: Parameters with * must be provided, "supported_origins" are the fonts which the server can currently map to Unicode, and "detected_supported_fonts" are the Nepali fonts which were found on your document (This field is empty in case of .txt files as autodetect won't work there)
 
@@ -120,6 +122,25 @@ EXPECTED RESPONSES:
 
 NOTE: This endpoint return status code 200 even if flush was not done due to wrong flush_key. Refer to logfile to know if files were actually flushed
 
+
+**Endpoint: "/processtext"**
+
+Required parameters: 
+- **origin** (Font which is used in the text)
+- **target** (Target font to which text will be mapped to)
+- **text*** (The text which is to be mapped)
+
+Methods: POST, GET
+
+EXPECTED RESPONSES:
+
+| STATUS CODE | INFORMATION |
+|--|--|
+| 200  | } |
+| 403 | The origin or target you provided is not available/supported. Reason will be on "message" key of response JSON} |
+| 500 | Error while processing requests. This indicates the error on server-side. |
+
+NOTE: Parameters with * must be provided, "origin" is the font on which text is typed (It must be one of supported origin of npttf2utf library used).
 
 ### **Adding support for new file type or Adding mapping for a new font**
 

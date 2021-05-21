@@ -115,4 +115,36 @@ $(document).ready(function () {
             console.log("No origin font selected");
         }
     });
+    $("#switchtofile").on("click", function (event) {
+        $(".card-type-mode").hide();
+        $(".card-document-mode").show();
+    });
+    $("#switchtolive").on("click", function (event) {
+        $(".card-document-mode").hide();
+        $(".card-type-mode").show();
+    });
+
+    $('#live-text').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        console.log(keycode)
+        if(keycode == '32'){
+            var formdata = { origin: $("#live-origin").find(":selected").text(), target: $("#live-target").find(":selected").text(), text: $("#live-text").val()+" " };
+            console.log(formdata)
+            $.ajax({
+                type: "POST",
+                url: "/processtext",
+                data: formdata,
+                timeout: 800000,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    $("#live-text").val(data.text);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var response = jQuery.parseJSON(jqXHR.responseText);
+                    console.log(response.message)
+                },
+            });
+        }
+    });
 });
