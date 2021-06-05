@@ -198,11 +198,12 @@ def flush(param_flush_key):
             return {'message': 'Internal error ', 'description': gendesc(e)}, 500
     return {'message': 'Done'}, 200
 
-
+create_dirs()
+with app.app_context():
+    db.create_all()
+    
 if __name__ == '__main__':
-    create_dirs()
-    with app.app_context():
-        db.create_all()
+
     print("""
     --------------- npFontUnify ---------------
       Using Rule file          : {}
