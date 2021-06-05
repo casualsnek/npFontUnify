@@ -1,6 +1,8 @@
+import traceback
+
 from flask import Flask, request, render_template, send_from_directory
 from flask_cors import CORS
-from db.model import db, files
+from db.model import db, Files
 import npttf2utf
 import os
 import random
@@ -17,6 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+ERR_DESCRIPTION = os.environ.get('ERR_DESC', 'none')
 RULES_JSON = os.environ.get('RULES_JSON', os.path.join(os.path.dirname(npttf2utf.__file__), 'map.json'))
 FLUSH_KEY = os.environ.get('FLUSH_KEY', ''.join(random.choice(string.ascii_letters) for x in range(32)))
 UPLOADS_LIFESPAN = int(os.environ.get('FILE_LIFESPAN', '60')) * 60
@@ -46,6 +49,16 @@ def create_dirs():
         os.makedirs(PROCESSED_FILES_STORAGE)
 
 
+# Get error description as specified from err_desc env var
+def gendesc(e=None):
+    if ERR_DESCRIPTION == 'traceback':
+        return traceback.format_exc()
+    elif ERR_DESCRIPTION == 'exc_name':
+        return str(e)
+    else:
+        return None
+
+
 # WebApp routes
 @app.route('/static/<string:file_name>', methods=['GET'])
 def serve_static(file_name):
@@ -64,15 +77,14 @@ def home():
 def upload():
     uploaded_file = request.files['document']
     file_extension = uploaded_file.filename.split('.')[-1]
-    internal_name = ''.join(random.choice(string.ascii_letters) for x in range(32))
-    file_key = ''.join(random.choice(string.ascii_letters) for x in range(32))
+    internal_name = file_key = ''.join(random.choice(string.ascii_letters) for x in range(32))
 
     if file_extension in supported_file_types.keys() and uploaded_file.filename != '':
         try:
             uploaded_file.save(os.path.join(UPLOADED_FILES_STORAGE, internal_name + '.' + file_extension))
             detected_fonts = supported_file_types[file_extension].detect_used_fonts(
                 UPLOADED_FILES_STORAGE + internal_name + '.' + file_extension)
-            file_in_db = files(file_key, uploaded_file.filename, internal_name + '.' + file_extension, file_extension)
+            file_in_db = Files(file_key, uploaded_file.filename, internal_name + '.' + file_extension, file_extension)
             db.session.add(file_in_db)
             db.session.commit()
             return {'file_id': file_key,
@@ -82,40 +94,35 @@ def upload():
         except Exception as e:
             db.session.flush()
             db.session.rollback()
-            return {'message': 'Internal error ' + str(e)}, 500
+            return {'message': 'Internal error ', 'description': gendesc(e)}, 500
     else:
         return {'message': 'No support for provided file type'}, 403
 
 
 @app.route('/processtext', methods=['POST', 'GET'])
 def map_text():
-    origin_font = None
-    target_font = None
-    text = None
-    if request.method == "POST":
-        origin_font = request.form.get("origin", "Preeti")
-        target_font = request.form.get("target", "Unicode")
-        text = request.form['text']
-    else:
-        origin_font = request.args.get("origin", "Preeti")
-        target_font = request.args.get("target", "Unicode")
-        text = request.args['text']
+    origin_font = request.form.get("origin", "Preeti") if request.method == "POST" \
+        else request.args.get("origin", "Preeti")
+    target_font = request.form.get("target", "Unicode") if request.method == "POST" \
+        else request.args.get("target", "Unicode")
+    text = request.form['text'] if request.method == "POST" else request.args['text']
+
     if target_font.lower() == "preeti":
         try:
             text = font_mapper.map_to_preeti(text, from_font=origin_font)
             return {"text": text}, 200
         except npttf2utf.NoMapForOriginException:
             return {"message": "Cannot map to preeti from origin font '" + origin_font + "'"}, 403
-        except:
-            return {"message": "Internal error"}, 500
+        except Exception as e:
+            return {'message': 'Internal error ', 'description': gendesc(e)}, 500
     elif target_font.lower() == "unicode":
         try:
             text = font_mapper.map_to_unicode(text, from_font=origin_font)
             return {"text": text}, 200
         except npttf2utf.NoMapForOriginException:
             return {"message": "Cannot map to preeti from origin font '" + origin_font + "'"}, 403
-        except:
-            return {"message": "Internal error"}, 500
+        except Exception as e:
+            return {'message': 'Internal error ', 'description': gendesc(e)}, 500
     else:
         return {"message": "Cannot map to selected target font '" + target_font + "'"}, 403
 
@@ -125,8 +132,8 @@ def process():
     origin_font = request.form['origin']
     target_font = request.form['target']
     file_key = request.form['file_id']
-    file_in_db = files.query.filter(files.file_key == file_key, files.processed == False,
-                                    files.uploaded_on >= int(time.time()) - UPLOADS_LIFESPAN).first()
+    file_in_db = Files.query.filter(Files.file_key == file_key, Files.processed == False,
+                                    Files.uploaded_on >= int(time.time()) - UPLOADS_LIFESPAN).first()
     if file_in_db:
         if file_in_db.ftype in supported_file_types:
             components = json.loads(request.form.get('process_components', '["body_paragraph", "table", "shape"]'))
@@ -142,14 +149,14 @@ def process():
                 db.session.commit()
                 return {'message': 'success', 'download_uri': 'download/' + file_key}, 200
             except npttf2utf.NoMapForOriginException:
-                return {'message': 'Unsupported font to map from'}, 500
+                return {'message': 'Unsupported font to map from', 'description': None}, 500
             except npttf2utf.UnsupportedMapToException:
-                return {'message': 'Cannot map to provided font/type face. Unsupported !'}, 500
+                return {'message': 'Cannot map to provided font/type face. Unsupported !', 'description': None}, 500
             except npttf2utf.TxtAutoModeException:
-                return {'message': 'Font auto-convert not available for this file type'}, 500
-            except:
+                return {'message': 'Font auto-convert not available for this file type', 'description': None}, 500
+            except Exception as e:
                 return {'message': 'Internal error. Contact administrator with this token (' + file_key + ')',
-                        'token': file_key}, 500
+                        'token': file_key, 'description': gendesc(e)}, 500
         else:
             return {'message': 'No support for provided file type'}, 403
     else:
@@ -158,16 +165,17 @@ def process():
 
 @app.route('/download/<string:file_key>', methods=['GET'])
 def download(file_key):
-    file_in_db = files.query.filter(files.file_key == file_key, files.processed == True,
-                                    files.uploaded_on >= int(time.time()) - UPLOADS_LIFESPAN).first()
+    file_in_db = Files.query.filter(Files.file_key == file_key, Files.processed == True,
+                                    Files.uploaded_on >= int(time.time()) - UPLOADS_LIFESPAN).first()
     if file_in_db:
         try:
             return send_from_directory(PROCESSED_FILES_STORAGE,
                                        file_in_db.internal_name,
                                        as_attachment=True,
                                        attachment_filename=file_in_db.orginal_name)
-        except:
-            return {'message': 'Critical error! File not found on server, Contact administrators'}
+        except Exception as e:
+            return {'message': 'Internal error! File not found on server, Contact administrators',
+                    'description': gendesc(e)}, 500
     else:
         return {'message': 'File not found, not processed or more than 60 minutes elapsed after upload'}, 404
 
@@ -176,8 +184,8 @@ def download(file_key):
 def flush(param_flush_key):
     if param_flush_key == FLUSH_KEY:
         try:
-            files_in_db = files.query.filter(files.uploaded_on <= int(time.time()) - UPLOADS_LIFESPAN,
-                                             files.isdeleted is False)
+            files_in_db = Files.query.filter(Files.uploaded_on <= int(time.time()) - UPLOADS_LIFESPAN,
+                                             Files.isdeleted is False)
             for file in files_in_db:
                 if os.path.exists(UPLOADED_FILES_STORAGE + file.internal_name):
                     os.remove(UPLOADED_FILES_STORAGE + file.internal_name)
@@ -185,9 +193,9 @@ def flush(param_flush_key):
                     os.remove(PROCESSED_FILES_STORAGE + file.internal_name)
                 file.isdeleted = True
                 db.session.commit()
-        except:
+        except Exception as e:
             db.session.flush()
-            return {'message': 'Internal error.'}, 500
+            return {'message': 'Internal error ', 'description': gendesc(e)}, 500
     return {'message': 'Done'}, 200
 
 

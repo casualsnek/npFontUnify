@@ -26,7 +26,6 @@ $(document).ready(function () {
                     document_id = data.file_id;
                     $(".origin-selection").html("");
                     $(".target-selection").html("");
-                    console.log("SUCCESS : ", data);
                     if (data.detected_supported_fonts.length > 0) {
                         var all_detected_fonts = "";
                         for (i = 0; i < data.detected_supported_fonts.length; i++) {
@@ -86,7 +85,6 @@ $(document).ready(function () {
             var components = []
             $(".process_components:checked").each(function() {
                 components.push($(this).val());
-                console.log($(this).val())
             });
             formdata.process_components = JSON.stringify(components)
             $(".font-selection-card").hide();
@@ -124,27 +122,34 @@ $(document).ready(function () {
         $(".card-type-mode").show();
     });
 
-    $('#live-text').keypress(function(event){
+
+    function maptextboxcontent() {
+        var formdata = { origin: $("#live-origin").find(":selected").text(), target: $("#live-target").find(":selected").text(), text: $("#live-text").val()+" " };
+        $.ajax({
+            type: "POST",
+            url: "/processtext",
+            data: formdata,
+            timeout: 800000,
+            dataType: "json",
+            success: function (data) {
+                $("#live-text").val(data.text);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var response = jQuery.parseJSON(jqXHR.responseText);
+            },
+        });
+    };
+
+
+    $('#live-text').on('keyup', function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
-        console.log(keycode)
         if(keycode == '32'){
-            var formdata = { origin: $("#live-origin").find(":selected").text(), target: $("#live-target").find(":selected").text(), text: $("#live-text").val()+" " };
-            console.log(formdata)
-            $.ajax({
-                type: "POST",
-                url: "/processtext",
-                data: formdata,
-                timeout: 800000,
-                dataType: "json",
-                success: function (data) {
-                    console.log(data)
-                    $("#live-text").val(data.text);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    var response = jQuery.parseJSON(jqXHR.responseText);
-                    console.log(response.message)
-                },
-            });
+            maptextboxcontent();
         }
+    });
+
+
+    $('#mapnowbtn').click(function(event){
+        maptextboxcontent();
     });
 });

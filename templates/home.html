@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="static/assets/favicon.ico">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-    <link rel="stylesheet" href="static/assets/dark.css" />
+    <link rel="stylesheet" href="static/assets/main.css" />
     <title>npFontUnity | Unify Nepali font faces</title>
 </head>
 <body>
@@ -18,13 +18,13 @@
         <br />
         <div class="card">
             <div class="card-header" align="center">
-                Unify Nepali font face
+                Unify Nepali font faces
                 <div class="row">
                     <div class="col" align="center">
-                        <button class="btn btn-primary" id="switchtofile"> File conversion </button>
+                        <button class="btn btn-primary" id="switchtofile">File conversion</button>
                     </div>
                     <div class="col" align="center">
-                        <button class="btn btn-primary" id="switchtolive"> Live type and map</button>
+                        <button class="btn btn-primary" id="switchtolive">Live mapping</button>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                             </label>
                             <p>
                                 <small>** This is a server sided tool! Do not upload your files if they are confidential! Use
-                                    <a href="https://github.com/trippygeese/npttf2utf">npttf2utf</a> instead**
+                                    <a href="https://github.com/casualsnek/npttf2utf">npttf2utf</a> instead**
                                 </small>
                             </p>
                         </div>
@@ -148,6 +148,7 @@
                     <br>
                     <div style="text-align: center">
                         <textarea id="live-text" rows="10" style="width: 90%; max-width: 90%;" placeholder="Type in select origin font here, it will be mapped automatically to target font on pressing space"></textarea>
+                        <button class="btn btn-success" id="mapnowbtn">Map text</button>
                     </div>
                 </div>
             </div>
@@ -162,7 +163,7 @@
                     <a href="static/assets/Demo.docx" class="btn btn-link">Download demo document</a>
                 </div>
                 <div class="col">
-                    <a href="https://github.com/trippygeese/npFontUnify" class="btn btn-link">Github</a>
+                    <a href="https://github.com/casualsnek/npFontUnify" class="btn btn-link">Github</a>
                 </div>
             </div>
         </div>
@@ -185,44 +186,49 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg show-modal-about" tabindex="-1" id="show-modal-about" role="dialog" aria-labelledby="show-modal-about" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">About/Help</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        npFontUnify by @trippygeese
+        <div class="modal fade bd-example-modal-lg show-modal-about" tabindex="-1" id="show-modal-about" role="dialog" aria-labelledby="show-modal-about" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">About/Help</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="card-body">
-                        <p>
-                            npFontUnify is a simple web based application to unify Nepali ASCII Font faces in a docx or a txt files.
-                        </p>
-                        <p>
-                            With npFontUnify you can easily convert your documents typed in Preeti, Sagarmatha, PCS Nepali or Kantipur to Devanagari Unicode or Preeti. Simply start by Uploading your document by clicking the upload
-                            button. If your document is supported, you will get to choose the Map from and Map to list. You can choose Autodetect which will find the all supported fonts within the
-                            document and convert them to Unicode/Preeti while keeping non Nepali fonts as it is or you can force an origin font by which all the text in document will be taken as selected font and will be mapped to Unicode
-                        </p>
-                        <h3><b> How to use </b></h3>
-                        <b>1) Click on Upload icon </b><br>
-                        <b>2) Browse your file and upload it </b><br>
-                        <b>3.a) If your file is ".txt" select the font mapping which should be used (From font -> To font) </b><br>
-                        <b>3.b) If your file is ".docx" select the font mapping which should be used or better use the "Auto" Option to auto convert supported font while keeping other font intact</b><br>
-                        <b>4) If your file is ".docx" select the components which should be processed </b><br>
-                        <b>5) Wait ! If any errors report </b><br>
-                        <b>6) Click download icon </b><br>
-                        <p>
-                            Note: This tool can convert text on paragraphs, text boxes/shapes and tables only as of now, headers/footers or everything else may be ignored.
-                        </p>
-                        <p>
-                            <b> <u>If you encounter any problem or have any suggestions open an issue on github. (Github link in footer ) </u></b>
-                        </p>
+                    <div class="card">
+                        <div class="card-header">
+                            npFontUnify
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                npFontUnify is a simple web based application to unify Nepali ASCII Font faces in a docx or a txt files.
+                            </p>
+                            <p>
+                                With npFontUnify you can easily convert your documents typed in Preeti, Sagarmatha, PCS Nepali or Kantipur to Devanagari Unicode or Preeti. Simply start by Uploading your document by clicking the upload
+                                button. If your document is supported, you will get to choose the Map from and Map to list. You can choose Autodetect which will find the all supported fonts within the
+                                document and convert them to Unicode/Preeti while keeping non Nepali fonts as it is or you can force an origin font by which all the text in document will be taken as selected font and will be mapped to Unicode
+                            </p>
+                            <h3><b> How to use </b></h3>
+                            <ol>
+                                <li>Click on Upload icon</li>
+                                <li>Browse your file and upload it</li>
+                                <li>
+                                    <ol type="a">
+                                        <li>If your file is ".txt" select the font mapping which should be used (From font -> To font)</li>
+                                        <li>If your file is ".docx" select the font mapping which should be used or better use the "Auto" Option to auto convert supported font while keeping other font intact</li>
+                                    </ol>
+                                </li>
+                                <li>If your file is ".docx" select the components which should be processed</li>
+                                <li>Wait ! If any errors report</li>
+                                <li>Click download icon</li>
+                            </ol>
+                            <p>
+                                Note: This tool can convert text on paragraphs, text boxes/shapes and tables only as of now, headers/footers or everything else may be ignored.
+                            </p>
+                            <p>
+                                <b> <u>If you encounter any problem or have any suggestions open an issue on github. (Github link in footer ) </u></b>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
