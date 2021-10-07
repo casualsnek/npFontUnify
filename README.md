@@ -1,5 +1,3 @@
-# **trippygeese**
-
 ## npFontUnify
 Flask Web App powered by [npttf2utf](https://github.com/trippygeese/npttf2utf) to Unify multiple Nepali ASCII font faces like Preeti, Sagarmatha, etc to Devanagari Unicode or Preeti made on Python (Flask) with font autodetection and component selection. (paragraphs, table, shape/textbox)
 
