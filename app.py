@@ -43,9 +43,9 @@ font_mapper = npttf2utf.FontMapper(RULES_JSON)
 
 # Create storage directories if missing
 def create_dirs():
-    if not os.path.isdir(UPLOADED_FILES_STORAGE):
+    if not os.path.exists(UPLOADED_FILES_STORAGE):
         os.makedirs(UPLOADED_FILES_STORAGE)
-    if not os.path.isdir(PROCESSED_FILES_STORAGE):
+    if not os.path.exists(PROCESSED_FILES_STORAGE):
         os.makedirs(PROCESSED_FILES_STORAGE)
 
 
@@ -200,7 +200,13 @@ def flush(param_flush_key):
 
 create_dirs()
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+    except Exception as e:
+        if "table files already exists" in str(e):
+            pass
+        else:
+            raise(e)
     
 if __name__ == '__main__':
 
