@@ -20,6 +20,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 ERR_DESCRIPTION = os.environ.get('ERR_DESC', 'none')
+if int(os.environ.get('DEBUG', 0)):
+    ERR_DESCRIPTION = 'traceback'
 RULES_JSON = os.environ.get('RULES_JSON', os.path.join(os.path.dirname(npttf2utf.__file__), 'map.json'))
 FLUSH_KEY = os.environ.get('FLUSH_KEY', ''.join(random.choice(string.ascii_letters) for x in range(32)))
 UPLOADS_LIFESPAN = int(os.environ.get('FILE_LIFESPAN', '60')) * 60
@@ -51,12 +53,13 @@ def create_dirs():
 
 # Get error description as specified from err_desc env var
 def gendesc(e=None):
+    err = None
     if ERR_DESCRIPTION == 'traceback':
-        return traceback.format_exc()
+        err = traceback.format_exc()
     elif ERR_DESCRIPTION == 'exc_name':
-        return str(e)
-    else:
-        return None
+        err = str(e)
+    print("ERROR: ", err)
+    return err
 
 
 # WebApp routes
@@ -172,7 +175,7 @@ def download(file_key):
             return send_from_directory(PROCESSED_FILES_STORAGE,
                                        file_in_db.internal_name,
                                        as_attachment=True,
-                                       attachment_filename=file_in_db.orginal_name)
+                                       download_name=file_in_db.orginal_name)
         except Exception as e:
             return {'message': 'Internal error! File not found on server, Contact administrators',
                     'description': gendesc(e)}, 500

@@ -22,11 +22,11 @@ Install the dependencies and start the server.
 
 ```
 $ git clone https://github.com/trippygeese/npFontUnify.git
-$ cd npttf2utf-flask
+$ cd npFontUnify
 $ pip install -r requirements.txt
 or
 $ pip3 install -r requirements.txt
-$ python3 app.py
+$ DEBUG=1 python3 app.py
 ```
     
      
